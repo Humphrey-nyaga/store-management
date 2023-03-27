@@ -1,2 +1,2 @@
-package com.example.storemanagement.security;public class SecurityConfig {
-}
+package com.example.storemanagement.security;
+

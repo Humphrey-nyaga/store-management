@@ -19,6 +19,8 @@ public class Employee {
     private String dob;
     private String email;
     private String password;
+    private String token;
+
     @Column(unique=true)
     private String phoneNumber;
     @Column(unique = true)
@@ -28,7 +30,7 @@ public class Employee {
     private List<Role> roles = new ArrayList<>();
 
     public Employee(){}
-    public Employee(String firstname, String lastname, String password, String address, String dob, String email, String phoneNumber, String nationalID){
+    public Employee(String firstname, String lastname, String password, String address, String dob, String email, String phoneNumber, String nationalID, String token){
         this.address = address;
         this.dob = dob;
         this.email = email;
@@ -37,6 +39,11 @@ public class Employee {
         this.phoneNumber = phoneNumber;
         this.nationalID = nationalID;
         this.password = password;
+        this.token = token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Long getId() {
