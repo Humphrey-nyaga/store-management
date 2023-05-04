@@ -1,4 +1,4 @@
-package com.example.storemanagement.employee;
+package com.example.storemanagement.employee.auth;
 
 public class EmployeeLoginRequest {
     private String email;
