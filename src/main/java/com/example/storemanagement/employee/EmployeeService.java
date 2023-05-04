@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,10 +17,12 @@ public class EmployeeService implements UserDetailsService {
     private final EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository){
+
         this.employeeRepository = employeeRepository;
     }
 
     public Employee createEmployee(Employee employee){
+
         return employeeRepository.save(employee);
     }
 
@@ -41,7 +44,9 @@ public class EmployeeService implements UserDetailsService {
         if (existingEmployee.isPresent()) {
             return employeeRepository.save(employee);
         } else {
-            throw new EmployeeNotFoundException("Employee with id " + employee.getId() + " not found");
+            // Create  a new employee if does not exist
+            //throw new EmployeeNotFoundException("Employee with id " + employee.getId() + " not found");
+            return createEmployee(employee);
         }
     }
 

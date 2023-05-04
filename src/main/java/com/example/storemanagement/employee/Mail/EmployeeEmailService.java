@@ -1,7 +1,6 @@
 package com.example.storemanagement.employee.Mail;
 
 import com.example.storemanagement.employee.Employee;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -11,6 +10,11 @@ public class EmployeeEmailService {
 
     private JavaMailSender mailSender;
     String companyName = "My Store"; // TODO Considering having this value globally. Maybe in an env file
+
+    public EmployeeEmailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+
     public void sendRegistrationEmail(Employee employee, String activationLink) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject("Registration Confirmation");

@@ -1,13 +1,17 @@
 package com.example.storemanagement.employee;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class Employee implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -19,16 +23,17 @@ public class Employee {
     private String dob;
     private String email;
     private String password;
+    private String token;
+
     @Column(unique=true)
     private String phoneNumber;
     @Column(unique = true)
     private String nationalID;
-    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private List<Role> roles = new ArrayList<>();
+    private Role role;
 
     public Employee(){}
-    public Employee(String firstname, String lastname, String password, String address, String dob, String email, String phoneNumber, String nationalID){
+    public Employee(String firstname, String lastname, String password, String address, String dob, String email, String phoneNumber, String nationalID, String token){
         this.address = address;
         this.dob = dob;
         this.email = email;
@@ -37,6 +42,11 @@ public class Employee {
         this.phoneNumber = phoneNumber;
         this.nationalID = nationalID;
         this.password = password;
+        this.token = token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Long getId() {
@@ -63,8 +73,38 @@ public class Employee {
         return email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public String getPhoneNumber() {
@@ -111,11 +151,5 @@ public class Employee {
         this.nationalID = nationalID;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
 }
