@@ -29,12 +29,7 @@ public class EmployeeController {
 
     private Log log = LogFactory.getLog(EmployeeController.class);
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable();
-        return http.build();
-    }
+
 
     public EmployeeController(EmployeeService employeeService, PasswordEncoder passwordEncoder, EmployeeEmailService employeeEmailService ) {
         this.employeeService = employeeService;
@@ -65,7 +60,7 @@ public class EmployeeController {
         fields.put("email", employee.getEmail());
         fields.put("dob", employee.getDob());
         fields.put("address", employee.getAddress());
-        fields.put("roles", employee.getRoles());
+        fields.put("roles", employee.getAuthorities());
         return fields;
     }
 
