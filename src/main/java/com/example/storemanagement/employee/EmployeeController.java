@@ -1,6 +1,7 @@
 package com.example.storemanagement.employee;
 
 import com.example.storemanagement.employee.Mail.EmployeeEmailService;
+import com.example.storemanagement.employee.auth.EmployeeLoginRequest;
 import org.apache.commons.logging.LogFactory;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -64,6 +65,7 @@ public class EmployeeController {
         fields.put("email", employee.getEmail());
         fields.put("dob", employee.getDob());
         fields.put("address", employee.getAddress());
+        fields.put("roles", employee.getRoles());
         return fields;
     }
 
@@ -71,13 +73,6 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> findEmployeeById(@PathVariable("id") Long id) {
         Employee employee = employeeService.findEmployeeById(id);
-        /*Map<String, Object> Employee = new HashMap<>();
-        Employee.put("id", employee.getId());
-        Employee.put("firstName", employee.getFirstName());
-        Employee.put("lastName", employee.getLastName());
-        Employee.put("email", employee.getEmail());
-        Employee.put("dob", employee.getDob());
-        Employee.put("address", employee.getAddress());*/
         Map<String, Object> Employee = getEmployeeFields(employee);
         return new ResponseEntity<>(Employee, HttpStatus.OK);
     }
@@ -117,7 +112,7 @@ public class EmployeeController {
 
         if (passwordEncoder.matches(enteredPassword, storedPassword)) {
             Map<String, Object> newEmployee = getEmployeeFields(employee);
-
+        //TODO We need to have  JWT returned together with the response
             return ResponseEntity.ok(newEmployee);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

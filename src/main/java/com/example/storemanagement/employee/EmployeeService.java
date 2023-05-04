@@ -17,10 +17,12 @@ public class EmployeeService implements UserDetailsService {
     private final EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository){
+
         this.employeeRepository = employeeRepository;
     }
 
     public Employee createEmployee(Employee employee){
+
         return employeeRepository.save(employee);
     }
 
@@ -42,7 +44,9 @@ public class EmployeeService implements UserDetailsService {
         if (existingEmployee.isPresent()) {
             return employeeRepository.save(employee);
         } else {
-            throw new EmployeeNotFoundException("Employee with id " + employee.getId() + " not found");
+            // Create  a new employee if does not exist
+            //throw new EmployeeNotFoundException("Employee with id " + employee.getId() + " not found");
+            return createEmployee(employee);
         }
     }
 
@@ -62,7 +66,5 @@ public class EmployeeService implements UserDetailsService {
                 new UsernameNotFoundException("User not found with email: " + email));
         return new User(employee.getEmail(), employee.getPassword(), new ArrayList<>());
     }
-
-
 
 }
