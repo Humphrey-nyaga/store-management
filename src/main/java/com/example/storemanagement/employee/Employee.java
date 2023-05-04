@@ -1,6 +1,9 @@
 package com.example.storemanagement.employee;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +14,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "employee")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee implements UserDetails {
 
     @Id
@@ -23,7 +29,6 @@ public class Employee implements UserDetails {
     private String dob;
     private String email;
     private String password;
-    private String token;
 
     @Column(unique=true)
     private String phoneNumber;
@@ -32,22 +37,9 @@ public class Employee implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public Employee(){}
-    public Employee(String firstname, String lastname, String password, String address, String dob, String email, String phoneNumber, String nationalID, String token){
-        this.address = address;
-        this.dob = dob;
-        this.email = email;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.phoneNumber = phoneNumber;
-        this.nationalID = nationalID;
-        this.password = password;
-        this.token = token;
-    }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+
+
 
     public Long getId() {
         return id;
