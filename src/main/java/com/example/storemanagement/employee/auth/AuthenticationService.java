@@ -3,6 +3,7 @@ package com.example.storemanagement.employee.auth;
 
 import com.example.storemanagement.employee.Employee;
 import com.example.storemanagement.employee.EmployeeRepository;
+import com.example.storemanagement.employee.EmployeeService;
 import com.example.storemanagement.employee.Role;
 import com.example.storemanagement.employee.exceptions.EmployeeNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+   private final  EmployeeService employeeService;
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
         var employee = Employee.builder()
@@ -36,6 +38,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(employee);
         return AuthenticationResponse.builder()
                 .jwtToken(jwtToken)
+                .employeeDTO(employeeService.findEmployeeByEmail(employee.getEmail()))
                 .build();
     }
     public AuthenticationResponse register(AuthenticationRequest authenticationRequest){

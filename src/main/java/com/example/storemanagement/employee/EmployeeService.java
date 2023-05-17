@@ -1,6 +1,7 @@
 package com.example.storemanagement.employee;
 
 import com.example.storemanagement.employee.exceptions.EmployeeNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Service
 public class EmployeeService implements UserDetailsService {
     private final EmployeeRepository employeeRepository;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public EmployeeService(EmployeeRepository employeeRepository){
 
@@ -32,10 +34,11 @@ public class EmployeeService implements UserDetailsService {
 
     }
 
-    public Employee findEmployeeByEmail(String email){
-        return employeeRepository.findByEmail(email)
+    public EmployeeDTO findEmployeeByEmail(String email){
+        Employee employee = employeeRepository.findByEmail(email)
                 .orElseThrow(()-> new EmployeeNotFoundException("Employee with Email: " + " not found."));
 
+        return modelMapper.map(employee, EmployeeDTO.class);
     }
 
     public Employee updateEmployee(Employee employee) {

@@ -1,6 +1,6 @@
 package com.example.storemanagement.employee;
 
-public abstract class EmployeeDTO {
+public  class EmployeeDTO {
 
     private String role;
     private String nationalid;
@@ -11,6 +11,9 @@ public abstract class EmployeeDTO {
     private String lastname;
     private String firstname;
     private int id;
+
+    public EmployeeDTO() {
+    }
 
     public String getRole() {
         return role;

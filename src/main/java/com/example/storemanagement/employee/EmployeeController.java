@@ -46,13 +46,13 @@ public class EmployeeController {
         return new ResponseEntity<>(Employee, HttpStatus.OK);
     }
 
-    @GetMapping("/email/{email}")
-    @RolesAllowed("ADMIN")
-    public ResponseEntity<Map<String, Object>>  findEmployeeByEmail(@PathVariable("email") String email) {
-        Employee employee = employeeService.findEmployeeByEmail(email);
-        Map<String, Object> Employee = getEmployeeFields(employee);
-        return new ResponseEntity<>(Employee, HttpStatus.OK);
-    }
+//    @GetMapping("/email/{email}")
+//    @RolesAllowed("ADMIN")
+//    public ResponseEntity<Map<String, Object>>  findEmployeeByEmail(@PathVariable("email") String email) {
+//        Employee employee = employeeService.findEmployeeByEmail(email);
+//        Map<String, Object> Employee = getEmployeeFields(employee);
+//        return new ResponseEntity<>(Employee, HttpStatus.OK);
+//    }
 
     @PutMapping("/update")
     @RolesAllowed("ADMIN")
