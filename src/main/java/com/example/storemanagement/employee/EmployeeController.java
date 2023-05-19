@@ -1,16 +1,9 @@
 package com.example.storemanagement.employee;
-
-
-import jakarta.annotation.security.RolesAllowed;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.apache.commons.logging.Log;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/employee")
@@ -28,48 +21,28 @@ public class EmployeeController {
     }
 
 
-//    public Map<String, Object> getEmployeeFields(Employee employee) {
-//        Map<String, Object> fields = new HashMap<>();
-//        fields.put("id", employee.getId());
-//        fields.put("firstName", employee.getFirstName());
-//        fields.put("lastName", employee.getLastName());
-//        fields.put("email", employee.getEmail());
-//        fields.put("dob", employee.getDob());
-//        fields.put("address", employee.getAddress());
-//        fields.put("roles", employee.getAuthorities());
-//        return fields;
-//    }
-
-
     @GetMapping("/{id}")
-    @Secured("ROLE_ADMIN")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EmployeeDTO> findEmployeeById(@PathVariable("id") Long id) {
         EmployeeDTO employeeDTO = employeeService.findEmployeeById(id);
         return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
     }
 
     @GetMapping("/email/{email}")
-    @RolesAllowed("ADMIN")
     public ResponseEntity<EmployeeDTO>  findEmployeeByEmail(@PathVariable("email") String email) {
         EmployeeDTO employeeDTO = employeeService.findEmployeeByEmail(email);
         return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    @RolesAllowed("ADMIN")
     public ResponseEntity<EmployeeDTO>  updateEmployee(@RequestBody Employee employee) {
         EmployeeDTO employeeDTO = employeeService.updateEmployee(employee);
         return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 
 }
