@@ -23,14 +23,16 @@ public class EmployeeService implements UserDetailsService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee createEmployee(Employee employee){
-
-        return employeeRepository.save(employee);
+    public EmployeeDTO createEmployee(Employee employee){
+        Employee newEmployee =  employeeRepository.save(employee);
+        return modelMapper.map(newEmployee, EmployeeDTO.class);
     }
 
-    public Employee findEmployeeById(Long id){
-        return employeeRepository.findById(id)
+    public EmployeeDTO findEmployeeById(Long id){
+        Employee employee = employeeRepository.findById(id)
                 .orElseThrow(()-> new EmployeeNotFoundException("Employee with id: " + " not found."));
+
+        return modelMapper.map(employee, EmployeeDTO.class);
 
     }
 
@@ -41,11 +43,13 @@ public class EmployeeService implements UserDetailsService {
         return modelMapper.map(employee, EmployeeDTO.class);
     }
 
-    public Employee updateEmployee(Employee employee) {
+    public EmployeeDTO updateEmployee(Employee employee) {
         Optional<Employee> existingEmployee = employeeRepository.findById(employee.getId());
 
         if (existingEmployee.isPresent()) {
-            return employeeRepository.save(employee);
+            Employee employee1 =  employeeRepository.save(employee);
+            return modelMapper.map(employee1, EmployeeDTO.class);
+
         } else {
             // Create  a new employee if does not exist
             //throw new EmployeeNotFoundException("Employee with id " + employee.getId() + " not found");

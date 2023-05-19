@@ -26,40 +26,37 @@ public class EmployeeController {
     }
 
 
-    public Map<String, Object> getEmployeeFields(Employee employee) {
-        Map<String, Object> fields = new HashMap<>();
-        fields.put("id", employee.getId());
-        fields.put("firstName", employee.getFirstName());
-        fields.put("lastName", employee.getLastName());
-        fields.put("email", employee.getEmail());
-        fields.put("dob", employee.getDob());
-        fields.put("address", employee.getAddress());
-        fields.put("roles", employee.getAuthorities());
-        return fields;
-    }
+//    public Map<String, Object> getEmployeeFields(Employee employee) {
+//        Map<String, Object> fields = new HashMap<>();
+//        fields.put("id", employee.getId());
+//        fields.put("firstName", employee.getFirstName());
+//        fields.put("lastName", employee.getLastName());
+//        fields.put("email", employee.getEmail());
+//        fields.put("dob", employee.getDob());
+//        fields.put("address", employee.getAddress());
+//        fields.put("roles", employee.getAuthorities());
+//        return fields;
+//    }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> findEmployeeById(@PathVariable("id") Long id) {
-        Employee employee = employeeService.findEmployeeById(id);
-        Map<String, Object> Employee = getEmployeeFields(employee);
-        return new ResponseEntity<>(Employee, HttpStatus.OK);
+    public ResponseEntity<EmployeeDTO> findEmployeeById(@PathVariable("id") Long id) {
+        EmployeeDTO employeeDTO = employeeService.findEmployeeById(id);
+        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
     }
 
-//    @GetMapping("/email/{email}")
-//    @RolesAllowed("ADMIN")
-//    public ResponseEntity<Map<String, Object>>  findEmployeeByEmail(@PathVariable("email") String email) {
-//        Employee employee = employeeService.findEmployeeByEmail(email);
-//        Map<String, Object> Employee = getEmployeeFields(employee);
-//        return new ResponseEntity<>(Employee, HttpStatus.OK);
-//    }
+    @GetMapping("/email/{email}")
+    @RolesAllowed("ADMIN")
+    public ResponseEntity<EmployeeDTO>  findEmployeeByEmail(@PathVariable("email") String email) {
+        EmployeeDTO employeeDTO = employeeService.findEmployeeByEmail(email);
+        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
+    }
 
     @PutMapping("/update")
     @RolesAllowed("ADMIN")
-    public ResponseEntity<Map<String, Object>>  updateEmployee(@RequestBody Employee employee) {
-        Employee updatedEmployee = employeeService.updateEmployee(employee);
-        Map<String, Object> Employee = getEmployeeFields(updatedEmployee);
-        return new ResponseEntity<>(Employee, HttpStatus.OK);
+    public ResponseEntity<EmployeeDTO>  updateEmployee(@RequestBody Employee employee) {
+        EmployeeDTO employeeDTO = employeeService.updateEmployee(employee);
+        return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

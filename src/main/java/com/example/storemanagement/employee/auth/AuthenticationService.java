@@ -41,7 +41,7 @@ public class AuthenticationService {
                 .employeeDTO(employeeService.findEmployeeByEmail(employee.getEmail()))
                 .build();
     }
-    public AuthenticationResponse register(AuthenticationRequest authenticationRequest){
+    public AuthenticationResponse login(AuthenticationRequest authenticationRequest){
        authenticationManager.authenticate(
                new UsernamePasswordAuthenticationToken(
                        authenticationRequest.getEmail(),
@@ -53,6 +53,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(employee);
         return AuthenticationResponse.builder()
                 .jwtToken(jwtToken)
+                .employeeDTO(employeeService.findEmployeeByEmail(employee.getEmail()))
                 .build();
     }
 }
