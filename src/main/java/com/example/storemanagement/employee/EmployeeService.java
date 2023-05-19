@@ -31,7 +31,7 @@ public class EmployeeService implements UserDetailsService {
     public EmployeeDTO findEmployeeById(Long id){
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(()-> new EmployeeNotFoundException("Employee with id: " + " not found."));
-
+        System.out.println(employee.getAuthorities());
         return modelMapper.map(employee, EmployeeDTO.class);
 
     }

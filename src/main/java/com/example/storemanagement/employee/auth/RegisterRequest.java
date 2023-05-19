@@ -18,4 +18,5 @@ public class RegisterRequest {
     private String password;
     private String phoneNumber;
     private String nationalID;
+    private String role;
 }

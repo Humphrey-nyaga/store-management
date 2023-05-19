@@ -1,8 +1,11 @@
 package com.example.storemanagement.employee;
 
+
+import java.util.Collection;
+
 public  class EmployeeDTO {
 
-    private String role;
+    private Collection<String> authorities;
     private String nationalid;
     private String phonenumber;
     private String email;
@@ -15,12 +18,12 @@ public  class EmployeeDTO {
     public EmployeeDTO() {
     }
 
-    public String getRole() {
-        return role;
+    public Collection<String> getAuthorities() {
+        return authorities;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setAuthorities(Collection<String> authorities) {
+        this.authorities = authorities;
     }
 
     public String getNationalid() {
@@ -87,4 +90,6 @@ public  class EmployeeDTO {
     public void setId(int id) {
         this.id = id;
     }
+
+
 }
